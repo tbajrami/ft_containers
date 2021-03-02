@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:47:28 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/03/02 12:30:47 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/03/02 12:42:26 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ public:
     /* SIZE */
 
     size_t size() const {return this->_size;}
-    size_t max_size() const {return std::numeric_limits<size_t>::max();}
+    size_t max_size() const {return std::numeric_limits<size_t>::max() / sizeof(value_type);}
     size_t capacity() const {return this->_capacity;}
 
     void resize(size_t n, value_type val = value_type())
