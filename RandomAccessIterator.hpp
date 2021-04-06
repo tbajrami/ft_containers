@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 07:44:47 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/03/16 15:51:22 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/06 15:35:00 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,9 @@ class ReverseIterator
         ReverseIterator operator-(int n) {this->_ptr += n ; return (*this);}
 
         ReverseIterator operator+=(int n) {this->_ptr -= n; return (*this);}
-        ReverseIterator operator-=(int n) {this->_ptr += n; return (*this);}   
+        ReverseIterator operator-=(int n) {this->_ptr += n; return (*this);}
+
+        int      operator-(ReverseIterator const &rhs) {return (this->_ptr - rhs._ptr);}
 };
 
 template <class T>

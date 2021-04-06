@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 08:34:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/03/16 14:46:23 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/06 17:16:22 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int main()
 {
-    std::vector<int> c(10, 0);
     ft::Vector<int> b(10, 0);
+    std::vector<int> c(10, 0);
 
     std::cout << "\n######### --------- VECTOR --------- #########\n\n";
     
@@ -284,7 +284,7 @@ int main()
     std::cout << "\n######## ----- DEEP COPY ----- #######";
     std::cout << "\n######################################\n";
 
-    ft::Vector<int> f(b);
+    ft::Vector<int> ft_copy(b);
     ft::Vector<int>::iterator itc;
 
     std::cout << "\nft vector:\n";
@@ -292,9 +292,9 @@ int main()
         std::cout << *itf << " ";
 
     std::cout << "\n\nchange copy[5]: = 0\n";
-    f[5] = 0;
+    ft_copy[5] = 0;
     std::cout << "\ncp vector:\n";
-    for (itc = f.begin() ; itc != f.end() ; itc++)
+    for (itc = ft_copy.begin() ; itc != ft_copy.end() ; itc++)
         std::cout << *itc << " ";
     std::cout << "\n\n";
 
@@ -304,7 +304,7 @@ int main()
 
     std::cout << "\n### --- assign (value) --- ###\n\n";
 
-    std::vector<int> g(c);
+    std::vector<int> std_copy(c);
 
     std::cout << "\n### --- std --- ###\n\n";
 
@@ -338,37 +338,111 @@ int main()
     
     std::cout << "\n### --- std --- ###\n\n";
 
-    c.assign(g.begin(), g.end());
+    c.assign(std_copy.begin(), std_copy.end());
     std::cout << "assign(vec(300) to vec 1-20): ";
     for (its = c.begin() ; its != c.end() ; its++)
         std::cout << *its << " ";
     std::cout << "\ncapacity after assign: " << c.capacity() << std::endl;
 
-    std::vector<int> h(5, 5);
+    std::vector<int> std5(5, 5);
 
-    h.assign(c.begin(), c.end());
+    std5.assign(c.begin(), c.end());
     std::cout << "\nassign(vec(5) to vec 1-20): ";
-    for (its = c.begin() ; its != c.end() ; its++)
+    for (its = std5.begin() ; its != std5.end() ; its++)
         std::cout << *its << " ";
-    std::cout << "\ncapacity after assign: " << h.capacity() << std::endl;
-    std::cout << c.end() - c.begin() << std::endl;
+    std::cout << "\ncapacity after assign: " << std5.capacity() << std::endl;
+
+    std::cout << "\n### --- ft --- ###\n\n";
+
+    b.assign(ft_copy.begin(), ft_copy.end());
+    std::cout << "assign(vec(300) to vec 1-20): ";
+    for (itf = b.begin() ; itf != b.end() ; itf++)
+        std::cout << *itf << " ";
+    std::cout << "\ncapacity after assign: " << b.capacity() << std::endl;
+
+    ft::Vector<int> ft5(5, 5);
+
+    ft5.assign(b.begin(), b.end());
+    std::cout << "\nassign(vec(5) to vec 1-20): ";
+    for (itf = ft5.begin() ; itf != ft5.end() ; itf++)
+        std::cout << *itf << " ";
+    std::cout << "\ncapacity after assign: " << ft5.capacity() << std::endl;
+
+    std::cout << "\n### --- assign (reverse iterators) --- ###\n\n";
 
     std::cout << "\n### --- std --- ###\n\n";
 
-    ft::Vector<int> l(f.begin(), f.end());
+    c.assign(300, 5);
 
-    // b.assign(f.begin(), f.end());
-    // std::cout << "assign(vec(300) to vec 1-20): ";
-    // for (itf = b.begin() ; itf != b.end() ; itf++)
-    //     std::cout << *itf << " ";
-    // std::cout << "\ncapacity after assign: " << b.capacity() << std::endl;
+    c.assign(std5.rbegin(), std5.rend());
+    std::cout << "assign(vec(300) to vec 1-20): ";
+    for (its = c.begin() ; its != c.end() ; its++)
+        std::cout << *its << " ";
+    std::cout << "\ncapacity after assign: " << c.capacity() << std::endl;
 
-    // std::vector<int> l(5, 5);
+    std5.assign(5, 5);
 
-    // f.assign(b.begin(), b.end());
-    // std::cout << "\nassign(vec(5) to vec 1-20): ";
-    // for (itf = b.begin() ; itf != b.end() ; itf++)
-    //     std::cout << *itf << " ";
-    // std::cout << "\ncapacity after assign: " << f.capacity() << std::endl;
-    // std::cout << b.end() - b.begin() << std::endl;
+    std5.assign(c.rbegin(), c.rend());
+    std::cout << "\nassign(vec(5) to vec 1-20): ";
+    for (its = std5.begin() ; its != std5.end() ; its++)
+        std::cout << *its << " ";
+    std::cout << "\ncapacity after assign: " << std5.capacity() << std::endl;
+
+    std::cout << "\n### --- ft --- ###\n\n";
+
+    b.assign(300, 5);
+
+    b.assign(ft5.rbegin(), ft5.rend());
+    std::cout << "assign(vec(300) to vec 1-20): ";
+    for (itf = b.begin() ; itf != b.end() ; itf++)
+        std::cout << *itf << " ";
+    std::cout << "\ncapacity after assign: " << b.capacity() << std::endl;
+
+    ft5.assign(5, 5);
+
+    ft5.assign(b.rbegin(), b.rend());
+    std::cout << "\nassign(vec(5) to vec 1-20): ";
+    for (itf = ft5.begin() ; itf != ft5.end() ; itf++)
+        std::cout << *itf << " ";
+    std::cout << "\ncapacity after assign: " << ft5.capacity() << std::endl;
+
+    std::cout << "\n### --- push_back --- ###\n\n";
+
+    std::cout << "\n### --- std --- ###\n\n";
+
+    std::vector<int> nvec;
+
+    for (size_t i = 0 ; i < 20 ; i++)
+    {
+        nvec.push_back(i);
+        std::cout << "capacity: " << nvec.capacity() << std::endl;
+    }
+    for (size_t i = 0 ; i < 20 ; i++)
+        std::cout << "std[" << i << "]: " << nvec[i] << std::endl;
+
+    std::cout << "\n### --- ft --- ###\n\n";
+
+    ft::Vector<int> fvec;
+
+    for (size_t i = 0 ; i < 20 ; i++)
+    {
+        fvec.push_back(i);
+        std::cout << "capacity: " << fvec.capacity() << std::endl;
+    }
+
+    for (size_t i = 0 ; i < 20 ; i++)
+        std::cout << "ft[" << i << "]: " << fvec[i] << std::endl;
+
+    nvec.pop_back();
+    fvec.pop_back();
+
+    std::cout << "\n### --- 1 pop_back (std then ft) --- ###\n\n";
+
+    for (its = nvec.begin() ; its != nvec.end() ; its++)
+        std::cout << *its << " ";
+    
+    std::cout << std::endl;
+    
+    for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
+        std::cout << *itf << " ";
 }
