@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 07:44:47 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/06 15:35:00 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/07 12:40:47 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,18 @@ class Iterator
             return (n);
         }
 
-        Iterator operator+(int n) {this->_ptr += n ; return (*this);}
-        Iterator operator-(int n) {this->_ptr -= n ; return (*this);}
+        Iterator operator+(int n)
+        {
+            Iterator nv(*this);
+            nv._ptr += n;
+            return (nv);
+        }
+        Iterator operator-(int n) 
+        {
+            Iterator nv(*this);
+            nv._ptr -= n;
+            return (nv);
+        }
 
         Iterator operator+=(int n) {this->_ptr += n; return (*this);}
         Iterator operator-=(int n) {this->_ptr -= n; return (*this);}
@@ -130,8 +140,18 @@ class ReverseIterator
             return (n);
         }
 
-        ReverseIterator operator+(int n) {this->_ptr -= n ; return (*this);}
-        ReverseIterator operator-(int n) {this->_ptr += n ; return (*this);}
+        ReverseIterator operator+(int n)
+        {
+            ReverseIterator nv(*this);
+            nv._ptr -= n;
+            return (nv);
+        }
+        ReverseIterator operator-(int n) 
+        {
+            ReverseIterator nv(*this);
+            nv._ptr += n;
+            return (nv);
+        }
 
         ReverseIterator operator+=(int n) {this->_ptr -= n; return (*this);}
         ReverseIterator operator-=(int n) {this->_ptr += n; return (*this);}
@@ -191,8 +211,18 @@ class ConstIterator
             return (n);
         }
 
-        ConstIterator operator+(int n) {this->_ptr += n ; return (*this);}
-        ConstIterator operator-(int n) {this->_ptr -= n ; return (*this);}
+        ConstIterator operator+(int n)
+        {
+            ConstIterator nv(*this);
+            nv._ptr += n;
+            return (nv);
+        }
+        ConstIterator operator-(int n) 
+        {
+            ConstIterator nv(*this);
+            nv._ptr -= n;
+            return (nv);
+        }
 
         ConstIterator operator+=(int n) {this->_ptr += n; return (*this);}
         ConstIterator operator-=(int n) {this->_ptr -= n; return (*this);}
@@ -251,8 +281,18 @@ class ReverseConstIterator
             return (n);
         }
 
-        ReverseConstIterator operator+(int n) {this->_ptr -= n ; return (*this);}
-        ReverseConstIterator operator-(int n) {this->_ptr += n ; return (*this);}
+        ReverseConstIterator operator+(int n)
+        {
+            ReverseConstIterator nv(*this);
+            nv._ptr -= n;
+            return (nv);
+        }
+        ReverseConstIterator operator-(int n) 
+        {
+            ReverseConstIterator nv(*this);
+            nv._ptr += n;
+            return (nv);
+        }
 
         ReverseConstIterator operator+=(int n) {this->_ptr -= n; return (*this);}
         ReverseConstIterator operator-=(int n) {this->_ptr += n; return (*this);}   

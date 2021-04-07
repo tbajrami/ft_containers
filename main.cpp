@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 08:34:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/06 17:16:22 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/07 16:49:53 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,10 +188,6 @@ int main()
         std::cout << *its << " ";
     std::cout << "\n\n";
 
-    std::cout << "end:\n";
-    std::cout << *itf << std::endl;
-    std::cout << *its << std::endl;
-
     std::cout << "\n--end:\n";
     std::cout << *(--itf) << std::endl;
     std::cout << *(--its) << std::endl;
@@ -207,17 +203,11 @@ int main()
     std::cout << "sd rbegin: " << *(c.rbegin()) << std::endl;
     std::cout << "ft rbegin: " << *(b.rbegin()) << std::endl << std::endl;
 
-    std::cout << "sd rend : " << *(c.rend()) << std::endl;
-    std::cout << "ft rend : " << *(b.rend()) << std::endl << std::endl;
-
     std::cout << "sd rend - 1: " << *(c.rend() - 1) << std::endl;
     std::cout << "ft rend - 1: " << *(b.rend() - 1) << std::endl << std::endl;
 
     std::cout << "sd rbegin + 1: " << *(c.rbegin() + 1) << std::endl;
     std::cout << "ft rbegin + 1: " << *(b.rbegin() + 1) << std::endl << std::endl;
-
-    std::cout << "sd rend[5]: " << c.rend()[5] << std::endl;
-    std::cout << "ft rend[5]: " << b.rend()[5] << std::endl << std::endl;
 
     std::cout << "sd rbegin[5]: " << c.rbegin()[5] << std::endl;
     std::cout << "ft rbegin[5]: " << b.rbegin()[5] << std::endl;
@@ -445,4 +435,120 @@ int main()
     
     for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
         std::cout << *itf << " ";
+    
+    std::cout << "\n\n### --- insert 100 position 5 --- ###\n\n";
+
+    std::vector<int>::iterator spos = nvec.begin() + 5;
+    ft::Vector<int>::iterator fpos = fvec.begin() + 5;
+
+    nvec.insert(spos, 100);
+    fvec.insert(fpos, 100);
+
+    for (its = nvec.begin() ; its != nvec.end() ; its++)
+        std::cout << *its << " ";
+    
+    std::cout << std::endl;
+    
+    for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
+        std::cout << *itf << " ";
+
+    std::cout << "\n\n### --- insert 8 * 200 position 5 --- ###\n\n";
+
+    spos = nvec.begin() + 5;
+    fpos = fvec.begin() + 5;
+
+    nvec.insert(spos, 8, 200);
+    fvec.insert(fpos, 8, 200);
+
+    for (its = nvec.begin() ; its != nvec.end() ; its++)
+        std::cout << *its << " ";
+    
+    std::cout << std::endl;
+    
+    for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
+        std::cout << *itf << " ";
+
+    std::vector<int>nvec2;
+    ft::Vector<int>fvec2;
+
+    for (size_t i = 0 ; i < 20 ; i++)
+        nvec2.push_back(i + 50);
+
+    for (size_t i = 0 ; i < 20 ; i++)
+        fvec2.push_back(i + 50);
+
+    std::cout << "\n\n### --- insert range 53-57 position 3 --- ###\n\n";
+
+    nvec.insert(spos, nvec2.begin() + 3, nvec2.begin() + 8);
+    fvec.insert(fpos, fvec2.begin() + 3, fvec2.begin() + 8);
+
+    for (its = nvec.begin() ; its != nvec.end() ; its++)
+        std::cout << *its << " ";
+    
+    std::cout << std::endl;
+    
+    for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
+        std::cout << *itf << " ";
+    
+    std::cout << "\n\n### --- erase position 20 --- ###\n\n";
+
+    nvec.erase(nvec.begin() + 20);
+    fvec.erase(fvec.begin() + 20);
+
+    for (its = nvec.begin() ; its != nvec.end() ; its++)
+        std::cout << *its << " ";
+    
+    std::cout << std::endl;
+    
+    for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
+        std::cout << *itf << " ";
+    
+    std::cout << "\n\n### --- erase position 10-20 --- ###\n\n";
+
+    nvec.erase(nvec.begin() + 10, nvec.begin() + 20);
+    fvec.erase(fvec.begin() + 10, fvec.begin() + 20);
+
+    for (its = nvec.begin() ; its != nvec.end() ; its++)
+        std::cout << *its << " ";
+    
+    std::cout << std::endl;
+    
+    for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
+        std::cout << *itf << " ";
+
+    std::cout << "\n\n### --- swap --- ###\n\n";
+
+    ft::Vector<int> vec0(5, 5);
+    ft::Vector<int> vec1(10, 10);
+    std::vector<int> vec2(10, 10);
+
+    ft::Vector<int>::iterator fb = vec0.begin();
+
+    std::cout << "iterator set to vec(0)[0]: " << *fb << "\n\n";
+
+    std::cout << "vec0: ";
+    for (itf = vec0.begin() ; itf != vec0.end() ; itf++)
+        std::cout << *itf << " ";
+    std::cout << "\nvec1: ";
+    for (itf = vec1.begin() ; itf != vec1.end() ; itf++)
+        std::cout << *itf << " ";
+
+    vec0.swap(vec1);
+
+    std::cout << "\n\nafter swap vec0: ";
+    for (itf = vec0.begin() ; itf != vec0.end() ; itf++)
+        std::cout << *itf << " ";
+    std::cout << "\nafter swap vec1: ";
+    for (itf = vec1.begin() ; itf != vec1.end() ; itf++)
+        std::cout << *itf << " ";
+
+    std::cout << "\n\niterator set: " << *fb << std::endl;
+
+    std::cout << "\n\n### --- clear --- ###\n\n";
+
+    vec0.clear();
+    vec2.clear();
+
+    std::cout << "ft cleared size/capacity: " << vec0.size() << "/" << vec0.capacity() << std::endl;
+    std::cout << "sd cleared size/capacity: " << vec2.size() << "/" << vec2.capacity() << std::endl;
 }
