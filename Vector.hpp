@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:47:28 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/07 16:47:12 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/07 17:27:06 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ public:
     typedef size_t size_type;
     typedef ft::Iterator<T> iterator;
     typedef ft::ReverseIterator<T> reverse_iterator;
-    typedef ft::ConstIterator<T> const_iterator;
+    typedef const ft::ConstIterator<T> const_iterator;
     typedef ft::ReverseConstIterator<T> const_reverse_iterator;
 
 private:
@@ -433,5 +433,17 @@ private:
         for (iterator ite = last - 1 ; ite != first - 1 ; ite--)
             this->insert(position, *ite);
     }
+
+    friend void std::swap(ft::Vector<T> &x, ft::Vector<T> &y);
 };
+
 }
+
+template <class T>
+void swap(ft::Vector<T> &x, ft::Vector<T> &y) {x.swap(y);}
+
+// template <class T>
+// bool operator==(const ft::Vector<T> &lhs, ft::Vector<T> &rhs)
+// {
+//     if (lhs.size() !=)
+// }

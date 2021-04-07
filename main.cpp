@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 08:34:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/07 16:49:53 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/07 17:15:54 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -551,4 +551,22 @@ int main()
 
     std::cout << "ft cleared size/capacity: " << vec0.size() << "/" << vec0.capacity() << std::endl;
     std::cout << "sd cleared size/capacity: " << vec2.size() << "/" << vec2.capacity() << std::endl;
+
+    std::cout << "\n\n### --- non member overload swap --- ###\n\n";
+
+    std::cout << "before swap vec0: ";
+    for (itf = vec0.begin() ; itf != vec0.end() ; itf++)
+        std::cout << *itf << " ";
+    std::cout << "\nbefore swap vec1: ";
+    for (itf = vec1.begin() ; itf != vec1.end() ; itf++)
+        std::cout << *itf << " ";
+
+    swap(vec0, vec1);
+
+    std::cout << "\n\nafter swap vec0: ";
+    for (itf = vec0.begin() ; itf != vec0.end() ; itf++)
+        std::cout << *itf << " ";
+    std::cout << "\nafter swap vec1: ";
+    for (itf = vec1.begin() ; itf != vec1.end() ; itf++)
+        std::cout << *itf << " ";
 }
