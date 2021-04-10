@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:47:28 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/07 17:27:06 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/10 11:58:08 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <limits>
 #include <iterator>
 #include <utility>
+#include <typeinfo>
 #include "RandomAccessIterator.hpp"
 
 namespace ft
@@ -35,13 +36,14 @@ public:
     typedef size_t size_type;
     typedef ft::Iterator<T> iterator;
     typedef ft::ReverseIterator<T> reverse_iterator;
-    typedef const ft::ConstIterator<T> const_iterator;
+    typedef ft::ConstIterator<T> const_iterator;
     typedef ft::ReverseConstIterator<T> const_reverse_iterator;
 
 private:
 
     size_t _size;
     size_t _capacity;
+
 
 protected:
 
@@ -52,7 +54,7 @@ public:
 
     Vector() : _size(0), _capacity(0), _begin(NULL), _end(NULL) {};
 
-    Vector(size_t n, const value_type &val)
+    Vector(size_t n, const value_type &val = value_type())
     {
         size_t i;
 
@@ -67,9 +69,7 @@ public:
     template <class InputIterator>
     Vector(InputIterator first, InputIterator last)
     {
-        ft::Vector<value_type> nv = input_dispatch(first, last);
-        this->_begin = new value_type[1];
-        *this = nv;
+        input_dispatch(first, last);
     }
 
     ~Vector() {delete [] this->_begin;}
@@ -221,7 +221,9 @@ public:
 
     void assign(size_t n, const value_type &val)
     {
-        ft::Vector<value_type> nv(n, val);
+        ft::Vector<value_type> nv;
+
+        nv.input_dispatch(n, val);
         size_t cap = this->_capacity < n ? n : this->_capacity;
 
         *this = nv;
@@ -231,8 +233,9 @@ public:
     template<class InputIterator>
     void assign(InputIterator first, InputIterator last)
     {
-        ft::Vector<value_type> nv = input_dispatch(first, last);
+        ft::Vector<value_type> nv;
 
+        nv.input_dispatch(first, last);
         if (nv._size < this->_size)
             nv.reserve(this->_size);
         *this = nv;
@@ -329,97 +332,100 @@ public:
 
 private:
 
-    Vector input_dispatch(size_t n, value_type &val)
+    void input_dispatch(size_t n, value_type &val)
     {
-        ft::Vector<value_type> nv;
-
-        nv._size = n;
-        nv._capacity = n;
-        nv._begin = new value_type[n];
+        _size = n;
+        _capacity = n;
+        _begin = new value_type[n];
         for (size_t i = 0 ; i < n ; i++)
-            nv._begin[i] = val;
-        nv._end = nv._begin + n;
-        return nv;
+            _begin[i] = val;
+        _end = _begin + n;
     }
 
-    Vector input_dispatch(iterator first, iterator last)
+    template <class T1>
+    void input_dispatch(T1 *first, T1 *last)
     {
-        ft::Vector<value_type> nv;
-
         size_t size = last - first;
         size_t i = 0;
 
-        nv._size = size;
-        nv._capacity = size;
-        nv._begin = new value_type[size];
+        _size = size;
+        _capacity = size;
+        _begin = new value_type[size];
         while (first != last)
         {
-            nv._begin[i] = *first;
+            _begin[i] = *first;
             first++;
             i++;
         }
-        nv._end = nv._begin + size;
-        return nv;
+        _end = _begin + size;
     }
 
-    Vector input_dispatch(const_iterator first, const_iterator last)
+    void input_dispatch(iterator first, iterator last)
     {
-        ft::Vector<value_type> nv;
-
         size_t size = last - first;
         size_t i = 0;
 
-        nv._size = size;
-        nv._capacity = size;
-        nv._begin = new value_type[size];
+        _size = size;
+        _capacity = size;
+        _begin = new value_type[size];
         while (first != last)
         {
-            nv._begin[i] = *first;
+            _begin[i] = *first;
             first++;
             i++;
         }
-        nv._end = nv._begin + size;
-        return nv;
+        _end = _begin + size;
     }
 
-    Vector input_dispatch(reverse_iterator first, reverse_iterator last)
+    void input_dispatch(const_iterator first, const_iterator last)
     {
-        ft::Vector<value_type> nv;
+        size_t size = last - first;
+        size_t i = 0;
 
+        _size = size;
+        _capacity = size;
+        _begin = new value_type[size];
+        while (first != last)
+        {
+            _begin[i] = *first;
+            first++;
+            i++;
+        }
+        _end = _begin + size;
+    }
+
+    void input_dispatch(reverse_iterator first, reverse_iterator last)
+    {
         size_t size = first - last;
         size_t i = 0;
 
-        nv._size = size;
-        nv._capacity = size;
-        nv._begin = new value_type[size];
+        _size = size;
+        _capacity = size;
+        _begin = new value_type[size];
         while (first != last)
         {
-            nv._begin[i] = *first;
+            _begin[i] = *first;
             first++;
             i++;
         }
-        nv._end = nv._begin + size;
-        return nv;
+        _end = _begin + size;
     }
 
-    Vector input_dispatch(const_reverse_iterator first, const_reverse_iterator last)
+    void input_dispatch(const_reverse_iterator first, const_reverse_iterator last)
     {
-        ft::Vector<value_type> nv;
-
         size_t size = first - last;
         size_t i = 0;
 
-        nv._size = size;
-        nv._capacity = size;
-        nv._begin = new value_type[size];
+        _size = size;
+        _capacity = size;
+        _begin = new value_type[size];
         while (first != last)
         {
-            nv._begin[i] = *first;
+            _begin[i] = *first;
             first++;
             i++;
         }
-        nv._end = nv._begin + size;
-        return nv;
+        _end = _begin + size;
     }
 
     void insert_dispatch(iterator position, size_type n, const value_type &val)
@@ -437,13 +443,58 @@ private:
     friend void std::swap(ft::Vector<T> &x, ft::Vector<T> &y);
 };
 
-}
-
 template <class T>
 void swap(ft::Vector<T> &x, ft::Vector<T> &y) {x.swap(y);}
 
-// template <class T>
-// bool operator==(const ft::Vector<T> &lhs, ft::Vector<T> &rhs)
-// {
-//     if (lhs.size() !=)
-// }
+template <class T>
+bool operator==(const ft::Vector<T> &lhs, const ft::Vector<T> &rhs)
+{
+    if (lhs.size() != rhs.size())
+        return false;
+    else
+    {
+        for (size_t i = 0 ; i < lhs.size() ; i++)
+        {
+            if (lhs[i] != rhs[i])
+                return false;
+        }
+    }
+    return true;
+}
+
+template <class T>
+bool operator!=(const ft::Vector<T> &lhs, const  ft::Vector<T> &rhs) {return (!(lhs == rhs));}
+
+template <class T>
+bool operator<(const ft::Vector<T> &lhs, const ft::Vector<T> &rhs)
+{
+    size_t size = std::min(lhs.size(), rhs.size());
+    
+    for (size_t i = 0 ; i < size ; i++)
+    {
+        if (lhs[i] != rhs[i])
+            return (lhs[i] < rhs[i]);
+    }
+    return (lhs.size() < rhs.size());
+}
+
+template <class T>
+bool operator>=(const ft::Vector<T> &lhs, const ft::Vector<T> &rhs) {return !(lhs < rhs);}
+
+template <class T>
+bool operator>(const ft::Vector<T> &lhs, const ft::Vector<T> &rhs)
+{
+    size_t size = std::min(lhs.size(), rhs.size());
+    
+    for (size_t i = 0 ; i < size ; i++)
+    {
+        if (lhs[i] != rhs[i])
+            return (lhs[i] > rhs[i]);
+    }
+    return (lhs.size() > rhs.size());
+}
+
+template <class T>
+bool operator<=(const ft::Vector<T> &lhs, const ft::Vector<T> &rhs) {return !(lhs > rhs);}
+
+}

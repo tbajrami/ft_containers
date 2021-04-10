@@ -6,12 +6,11 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 07:44:47 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/07 12:40:47 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/10 11:14:00 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-
 
 namespace ft
 {
@@ -21,7 +20,6 @@ class Iterator
     public:
         
         typedef T value_type;
-        enum {is_iterator = true};
 
     private:
 
@@ -31,8 +29,8 @@ class Iterator
     
     /* canonical functions */
 
-        Iterator() {};
-        virtual ~Iterator() {};
+        Iterator() : _ptr(NULL) {}
+        virtual ~Iterator() {}
         Iterator &operator=(const Iterator &rhs) {this->_ptr = rhs._ptr ; return *this;}
         Iterator(const Iterator &ref) : _ptr(ref._ptr) {}
         void setPtr(value_type *ptr) {this->_ptr = ptr;}
@@ -93,7 +91,6 @@ class ReverseIterator
 {
     public:
         typedef T value_type;
-        typedef value_type is_iterator;
 
     private:
         value_type   *_ptr;
@@ -164,7 +161,6 @@ class ConstIterator
 {
     public:
         typedef T value_type;
-        typedef value_type is_iterator;
 
     private:
         value_type   *_ptr;
@@ -234,7 +230,6 @@ class ReverseConstIterator
 {
     public:
         typedef T value_type;
-        typedef value_type is_iterator;
 
     private:
         value_type   *_ptr;
