@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 08:34:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/10 16:20:46 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/12 13:28:47 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -802,9 +802,7 @@ int main()
     std::cout << "sd list front: " << slst0.front() << std::endl;
     std::cout << "sd list back: " << slst0.back() << std::endl;
 
-    std::cout << "\n\n";
-
-    std::cout << "\n######### --------- iterators --------- #########\n\n";
+    std::cout << "\n\n######### --------- iterators --------- #########\n\n";
 
     ft::List<int>::iterator lit;
     std::list<int>::iterator lite;
@@ -837,4 +835,115 @@ int main()
     {
         std::cout << *rlit << " ";
     }
+
+    std::cout << "\n\n######### --------- iterators on empty list --------- #########\n\n";
+
+    std::list<int> eslst;
+    ft::List<int> eflst;
+
+    std::cout << "sd begin: " << *eslst.begin() << "\n";
+    std::cout << "ft begin: " << *eflst.begin() << "\n";
+    std::cout << "\nsd rbegin: " << *eslst.rbegin() << "\n";
+    std::cout << "ft rbegin: " << *eflst.rbegin() << "\n";
+
+    std::cout << "\n\n######### --------- iterate on empty list (nothing happens) --------- #########\n\n";
+
+    for (lite = eslst.begin() ; lite != eslst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    for (lit = eflst.begin() ; lit != eflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- iterators on empty lists + push_back(1) --------- #########\n\n";
+
+    eslst.push_back(1);
+    eflst.push_back(1);
+
+    for (lite = eslst.begin() ; lite != eslst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\n";
+
+    for (lit = eflst.begin() ; lit != eflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    eslst.pop_back();
+    eflst.pop_back();
+
+    std::cout << "\n\n######### --------- reverse iterators on empty list (nothing happens) --------- #########\n";
+
+    std::list<int> eslst2;
+    ft::List<int> eflst2;
+
+    for (rlite = eslst2.rbegin() ; rlite != eslst2.rend() ; rlite++)
+    {
+        std::cout << *rlite << " ";
+    }
+
+    std::cout << "\n";
+
+    for (rlit = eflst2.rbegin() ; rlit != eflst2.rend() ; rlit++)
+    {
+        std::cout << *rlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- reverse iterators on empty lists + push_back(1) --------- #########\n\n";
+
+    eslst2.push_back(1);
+    eflst2.push_back(1);
+
+    for (rlite = eslst2.rbegin() ; rlite != eslst2.rend() ; rlite++)
+    {
+        std::cout << *rlite << " ";
+    }
+
+    std::cout << "\n";
+
+    for (rlit = eflst2.rbegin() ; rlit != eflst2.rend() ; rlit++)
+    {
+        std::cout << *rlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- construct with iterator --------- #########\n\nsd: ";
+
+    std::list<int> islst(slst0.begin(), slst0.end());
+    ft::List<int> iflst(flst0.begin(), flst0.end());
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- construct with reverse iterator --------- #########\n\nsd: ";
+
+    islst = std::list<int>(slst0.rbegin(), slst0.rend());
+    iflst = ft::List<int>(flst0.rbegin(), flst0.rend());
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
 }
