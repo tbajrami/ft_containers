@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 08:34:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/12 13:28:47 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/15 12:03:26 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,33 @@
 #include <list>
 #include <stack>
 #include <queue>
+
+bool is_even(const int &value) {return !(value % 2);}
+
+struct is_odd {bool operator() (const int &value) {return (value % 2);} };
+
+bool same_integral_part (double first, double second)
+{ return ( int(first)==int(second) ); }
+
+struct is_near {
+  bool operator() (double first, double second)
+  { return (fabs(first-second)<5.0); }
+};
+
+bool mycomparison (double first, double second)
+{ return ( int(first)<int(second) ); }
+
+bool compare_nocase (const std::string& first, const std::string& second)
+{
+  unsigned int i=0;
+  while ( (i<first.length()) && (i<second.length()) )
+  {
+    if (tolower(first[i])<tolower(second[i])) return true;
+    else if (tolower(first[i])>tolower(second[i])) return false;
+    ++i;
+  }
+  return ( first.length() < second.length() );
+}
 
 int main()
 {
@@ -496,6 +523,24 @@ int main()
     
     // for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
     //     std::cout << *itf << " ";
+
+    // int ar[5] = {10, 20, 30, 40, 50};
+
+    // std::cout << "\n\n### --- insert int range [10, 20, 30] position 3 --- ###\n\n";
+
+    // fpos = fvec.begin() + 5;
+    // spos = nvec.begin() + 5;
+
+    // nvec.insert(spos, ar, ar + 3);
+    // fvec.insert(fpos, ar, ar + 3);    
+
+    // for (its = nvec.begin() ; its != nvec.end() ; its++)
+    //     std::cout << *its << " ";
+    
+    // std::cout << std::endl;
+    
+    // for (itf = fvec.begin() ; itf != fvec.end() ; itf++)
+    //     std::cout << *itf << " ";
     
     // std::cout << "\n\n### --- erase position 20 --- ###\n\n";
 
@@ -763,6 +808,8 @@ int main()
     // std::cout << "(50, 295, 0, 0) < (50, 295, 0): " << (ftqu0 < ftqu1) << "\n";
     // std::cout << "(50, 295, 0, 0) == (50, 295, 0): " << (ftqu0 == ftqu1) << "\n";
 
+    
+
     std::cout << "\n######### --------- LIST --------- #########\n\n";
 
     std::list<int> slst0(5, 5);
@@ -946,4 +993,585 @@ int main()
         std::cout << *lit << " ";
     }
 
+    std::cout << "\n\n######### --------- assign list(3, 5) --------- #########\n\nsd: ";
+
+    islst.assign(3, 5);
+    iflst.assign(3, 5);
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- assign with iterators (from previous lists) --------- #########\n\nsd: ";
+
+    islst.assign(slst0.begin(), slst0.end());
+    iflst.assign(flst0.begin(), flst0.end());
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- assign with reverse iterators (from previous lists) --------- #########\n\nsd: ";
+
+    islst.assign(slst0.rbegin(), slst0.rend());
+    iflst.assign(flst0.rbegin(), flst0.rend());
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- insert 100 pos 2 --------- #########\n\nsd: ";
+
+    lite = islst.begin();
+    lite++;
+    lite++;
+    lit = iflst.begin();
+    lit++;
+    lit++;
+
+    islst.insert(lite, 100);
+    iflst.insert(lit, 100);
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- reverse iterating --------- #########\n\nsd: ";
+    
+
+    for (rlite = islst.rbegin() ; rlite != islst.rend() ; rlite++)
+    {
+        std::cout << *rlite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (rlit = iflst.rbegin() ; rlit != iflst.rend() ; rlit++)
+    {
+        std::cout << *rlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- insert 30 pos 2 * 5 --------- #########\n\nsd: ";
+
+    lite = islst.begin();
+    lite++;
+    lite++;
+    lit = iflst.begin();
+    lit++;
+    lit++;
+
+    islst.insert(lite, 5, 30);
+    iflst.insert(lit, 5, 30);
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- reverse iterating --------- #########\n\nsd: ";
+    
+
+    for (rlite = islst.rbegin() ; rlite != islst.rend() ; rlite++)
+    {
+        std::cout << *rlite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (rlit = iflst.rbegin() ; rlit != iflst.rend() ; rlit++)
+    {
+        std::cout << *rlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- erase position 2 --------- #########\n\nsd: ";
+
+    lite = islst.begin();
+    lite++;
+    lit = iflst.begin();
+    lit++;
+
+    islst.erase(lite);
+    iflst.erase(lit);
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\nsize: " << iflst.size() << "\n";
+
+    std::cout << "\n\n######### --------- reverse iterating --------- #########\n\nsd: ";    
+
+    for (rlite = islst.rbegin() ; rlite != islst.rend() ; rlite++)
+    {
+        std::cout << *rlite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (rlit = iflst.rbegin() ; rlit != iflst.rend() ; rlit++)
+    {
+        std::cout << *rlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- erase position 2 - 6 --------- #########\n\nsd: ";
+
+    lite = islst.begin();
+    lite++;
+    lit = iflst.begin();
+    lit++;
+
+    std::list<int>::iterator lite2 = islst.begin();
+    lite2++;lite2++;lite2++;lite2++;lite2++;
+    ft::List<int>::iterator lit2 = iflst.begin();
+    lit2++;lit2++;lit2++;lit2++;lit2++;
+
+    islst.erase(lite, lite2);
+    iflst.erase(lit, lit2);
+
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\nsize: " << iflst.size() << "\n";
+
+    std::cout << "\n\n######### --------- reverse iterating --------- #########\n\nsd: ";
+
+    for (rlite = islst.rbegin() ; rlite != islst.rend() ; rlite++)
+    {
+        std::cout << *rlite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (rlit = iflst.rbegin() ; rlit != iflst.rend() ; rlit++)
+    {
+        std::cout << *rlit << " ";
+    }
+
+    std::cout << "\n\n### --- swap --- ###\n\n";
+
+    ft::List<int> lst0(5, 5);
+    ft::List<int> lst1(10, 10);
+
+    ft::List<int>::iterator fb0 = lst0.begin();
+
+    std::cout << "iterator set to lst(0)[0]: " << *fb0 << "\n\n";
+
+    std::cout << "lst0: ";
+    for (lit = lst0.begin() ; lit != lst0.end() ; lit++)
+        std::cout << *lit << " ";
+    std::cout << "\nlst1: ";
+    for (lit = lst1.begin() ; lit != lst1.end() ; lit++)
+        std::cout << *lit << " ";
+
+    lst0.swap(lst1);
+
+    std::cout << "\n\nafter swap lst0: ";
+    for (lit = lst0.begin() ; lit != lst0.end() ; lit++)
+        std::cout << *lit << " ";
+    std::cout << "\nafter swap lst1: ";
+    for (lit = lst1.begin() ; lit != lst1.end() ; lit++)
+        std::cout << *lit << " ";
+
+    std::cout << "\n\niterator set: " << *fb0 << std::endl;
+
+    std::cout << "\n\n######### --------- resize (5) --------- #########\n\nsd: ";
+
+    islst.resize(5);
+    iflst.resize(5);
+    
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- resize (12, 99) --------- #########\n\nsd: ";
+
+    islst.resize(12, 99);
+    iflst.resize(12, 99);
+    
+    for (lite = islst.begin() ; lite != islst.end() ; lite++)
+    {
+        std::cout << *lite << " ";
+    }
+
+    std::cout << "\nft: ";
+
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- lstclear --------- #########\n\nsize: ";
+
+    lst0.clear();
+    std::cout << lst0.size();
+    std::cout << "\niteration on cleared : (nothing happens)";
+    for (lit = lst0.begin() ; lit != lst0.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- splice 10 20 30 pos 2 --------- #########\n\n";
+
+    ft::List<int>::iterator ifli = iflst.begin();
+    //ifli++;
+    ifli = iflst.end();
+
+    ft::List<int> lst2;
+    lst2.push_back(10);lst2.push_back(20);lst2.push_back(30);
+    iflst.splice(ifli, lst2);
+    std::cout << "lst: ";
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+    std::cout << "\nlst in parameter: ";
+    for (lit = lst2.begin() ; lit != lst2.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- splice lst[2] pos 2 --------- #########\n\n";
+
+    lst2.push_back(77);lst2.push_back(88);lst2.push_back(99);
+    ft::List<int>::iterator litt = lst2.begin();
+    litt++;
+    ft::List<int>::iterator ifli2 = iflst.begin();
+    //ifli2++;
+    ifli2 = iflst.end();
+    iflst.splice(ifli2, lst2, litt);
+
+    std::cout << "lst: ";
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+    std::cout << "\nlst in parameter: ";
+    for (lit = lst2.begin() ; lit != lst2.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+    std::cout << "\n\n######### --------- splice lst[2]-lst[4] pos 2 --------- #########\n\n";
+
+    lst2.push_back(444);
+    lst2.push_back(555);
+    lst2.push_back(666);
+    litt = lst2.begin();
+    ft::List<int>::iterator litt2 = lst2.begin();
+    litt++;
+    litt2++;litt2++;
+    std::cout << "\nlst: ";
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+    std::cout << "\nlst2: ";
+    for (lit = lst2.begin() ; lit != lst2.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+    ft::List<int>::iterator ifli3 = iflst.begin();
+    iflst.splice(++ifli3, lst2, lst2.begin(), litt2);
+
+    std::cout << "\nlst: ";
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+    std::cout << "\nlst in parameter: ";
+    for (lit = lst2.begin() ; lit != lst2.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\nsize " << iflst.size() << " " << lst2.size();
+
+    std::cout << "\n\n######### --------- splice in empty list --------- #########\n\n";
+
+    ft::List<int> ef;
+    
+    ef.splice(ef.begin(), lst2);
+    std::cout << "\nsplice previous lst in empty lst: ";
+    for (lit = ef.begin() ; lit != ef.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    lst2.push_back(2);lst2.push_back(4);lst2.push_back(6);lst2.push_back(8);
+    ef.clear();
+    litt2 = lst2.begin();
+    litt2++;litt2++;
+    ef.splice(ef.begin(), lst2, litt2);
+    std::cout << "\nsplice 6 in empty lst: ";
+    for (lit = ef.begin() ; lit != ef.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+    lst2.push_back(10);
+    litt2 = lst2.begin();
+    litt2++;litt2++;
+    ef.clear();
+    ef.splice(ef.begin(), lst2, lst2.begin(), litt2);
+
+    std::cout << "\n\n######### --------- remove all 99 --------- #########\n\n";
+
+    ft::List<int> iflst0(iflst);
+
+    std::cout << "lst before: ";
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    iflst.remove(99);
+
+    std::cout << "\nlst after: ";
+    for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- remove if even (func) --------- #########\n\n";
+
+    ft::List<int> iflst2(iflst);
+
+    std::cout << "lst before: ";
+    for (lit = iflst2.begin() ; lit != iflst2.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    iflst2.remove_if(is_even);
+
+    std::cout << "\nlst after: ";
+    for (lit = iflst2.begin() ; lit != iflst2.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- remove if odd (struct) --------- #########\n\n";
+
+    std::cout << "lst before: ";
+    for (lit = iflst2.begin() ; lit != iflst2.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    iflst2.remove_if(is_odd());
+
+    std::cout << "\nlst after: ";
+    for (lit = iflst2.begin() ; lit != iflst2.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- unique - remove all 99 but one --------- #########\n\nbefore: ";
+
+    for (lit = iflst0.begin() ; lit != iflst0.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    iflst0.unique();
+
+    std::cout << "\nafter: ";
+
+    for (lit = iflst0.begin() ; lit != iflst0.end() ; lit++)
+    {
+        std::cout << *lit << " ";
+    }
+
+    std::cout << "\n\n######### --------- unique - remove with same integral part then near (diff < 5) --------- #########\n\nbefore: ";
+
+    double mydoubles[]={2.72,  3.14,  12.15, 12.77, 12.77, 15.3, 72.25, 72.25, 73.0, 73.35 };
+    ft::List<double> mylist(mydoubles, mydoubles+10);
+
+    mylist.unique();
+
+    ft::List<double>::iterator mlit;
+
+    for (mlit = mylist.begin() ; mlit != mylist.end() ; mlit++)
+    {
+        std::cout << *mlit << " ";
+    }
+    
+    mylist.unique(same_integral_part);
+
+    std::cout << "\nafter1: ";
+
+    for (mlit = mylist.begin() ; mlit != mylist.end() ; mlit++)
+    {
+        std::cout << *mlit << " ";
+    }
+
+    mylist.unique(is_near());
+
+    std::cout << "\nafter2: ";
+
+    for (mlit = mylist.begin() ; mlit != mylist.end() ; mlit++)
+    {
+        std::cout << *mlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- merge {1, 3, 12, 16, 50, 85, 122 } --------- #########\n\nlst: ";
+
+    ft::List<double> mylist0(mydoubles, mydoubles+10);
+    double mydoubles2[]={1, 3, 12, 16, 50, 85, 122};
+    ft::List<double> mylist2(mydoubles2, mydoubles2+7);
+
+    mylist0.merge(mylist2);
+
+    for (mlit = mylist0.begin() ; mlit != mylist0.end() ; mlit++)
+    {
+        std::cout << *mlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- merge with integral comparison (cplusplus.com example) --------- #########\n\nlst: ";
+    
+    ft::List<double> first;
+    ft::List<double> second;
+
+    first.push_back (2.2);
+    first.push_back (2.9);
+    first.push_back (3.1);
+
+    second.push_back (1.4);
+    second.push_back (3.7);
+    second.push_back (7.1);
+
+    first.merge(second);
+
+    // (second is now empty)
+
+    second.push_back (2.1);
+
+    first.merge(second,mycomparison);
+
+    for (ft::List<double>::iterator it=first.begin(); it!=first.end(); ++it)
+        std::cout << *it << " ";
+    std::cout << '\n';
+
+    std::cout << "\n\n######### --------- sort --------- #########\n\nlst: ";
+    
+    double mydoubles3[]={100, 30, -12, 16616, 50, 825, 122};
+    ft::List<double> mylist3(mydoubles3, mydoubles3+7);
+
+    mylist3.sort();
+
+    for (mlit = mylist3.begin() ; mlit != mylist3.end() ; mlit++)
+    {
+        std::cout << *mlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- sort w/ class compare (cplusplus.com example) --------- #########\n\nlst: ";
+
+    ft::List<std::string> mlst4;
+    ft::List<std::string>::iterator strit;
+    mlst4.push_back ("one");
+    mlst4.push_back ("two");
+    mlst4.push_back ("Three");
+
+    std::cout << "mlst4 contains:";
+    for (strit=mlst4.begin(); strit!=mlst4.end(); ++strit)
+    std::cout << ' ' << *strit;
+    std::cout << '\n';
+
+    mlst4.sort();
+
+    std::cout << "mlst4 contains (simple sort):";
+    for (strit=mlst4.begin(); strit!=mlst4.end(); ++strit)
+    std::cout << ' ' << *strit;
+    std::cout << '\n';
+
+    mlst4.sort(compare_nocase);
+
+    std::cout << "mlst4 contains (comparison not case sensitive):";
+    for (strit=mlst4.begin(); strit!=mlst4.end(); ++strit)
+    std::cout << ' ' << *strit;
+    std::cout << '\n';
+
+    std::cout << "\n\n######### --------- reverse --------- #########\n\nlst: ";
+
+    mylist3.reverse();
+
+    for (mlit = mylist3.begin() ; mlit != mylist3.end() ; mlit++)
+    {
+        std::cout << *mlit << " ";
+    }
+
+    std::cout << "\n\n######### --------- operators (cplusplus.com test)--------- #########\n\n";
+
+    ft::List<int> a; a.push_back(10);a.push_back(20);a.push_back(30);
+    ft::List<int> b; b.push_back(10);b.push_back(20);b.push_back(30);
+    ft::List<int> c; c.push_back(30);c.push_back(20);c.push_back(10);
+
+    if (a==b) std::cout << "a and b are equal\n";
+    if (b!=c) std::cout << "b and c are not equal\n";
+    if (b<c) std::cout << "b is less than c\n";
+    if (c>b) std::cout << "c is greater than b\n";
+    if (a<=b) std::cout << "a is less than or equal to b\n";
+    if (a>=b) std::cout << "a is greater than or equal to b\n";
 }

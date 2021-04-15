@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:47:28 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/12 12:48:25 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/14 16:03:34 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,20 +268,20 @@ public:
     iterator insert(iterator position, const value_type &val)
     {
         int i = 0;
-        size_t s = this->_size;
+        size_t s = _size;
         iterator itf;
 
-        for (iterator ite = this->begin() ; ite != position ; ite++)
+        for (iterator ite = begin() ; ite != position ; ite++)
             i++;
-        this->push_back(0);
-        if (s != this->_size)
+        push_back(0);
+        if (s != _size)
         {
-            itf = this->begin();
+            itf = begin();
             for (int j = 0 ; j != i ; j++)
                 itf++;
             position = itf;
-        }    
-        for (iterator ite = this->end() - 1 ; ite != position ; ite--)
+        }
+        for (iterator ite = end() - 1 ; ite != position ; ite--)
             *ite = *(ite - 1);
         *position = val;
         return position;
@@ -332,7 +332,7 @@ public:
 
 private:
 
-    void input_dispatch(size_t n, value_type &val)
+    void input_dispatch(size_t n, const value_type &val)
     {
         _size = n;
         _capacity = n;
@@ -344,6 +344,24 @@ private:
 
     template <class T1>
     void input_dispatch(T1 *first, T1 *last)
+    {
+        size_t size = last - first;
+        size_t i = 0;
+
+        _size = size;
+        _capacity = size;
+        _begin = new value_type[size];
+        while (first != last)
+        {
+            _begin[i] = *first;
+            first++;
+            i++;
+        }
+        _end = _begin + size;
+    }
+
+    template <class InputIterator>
+    void input_dispatch(InputIterator first, InputIterator last)
     {
         size_t size = last - first;
         size_t i = 0;
@@ -434,9 +452,36 @@ private:
             this->insert(position, val);
     }
 
+    template <class T1>
+    void insert_dispatch(iterator position, T1 *first, T1 *last)
+    {
+        while (last != first)
+        {
+            position = insert(position, *--last);
+        }
+    }
+
     void insert_dispatch(iterator position, iterator first, iterator last)
     {
         for (iterator ite = last - 1 ; ite != first - 1 ; ite--)
+            this->insert(position, *ite);
+    }
+
+    void insert_dispatch(iterator position, reverse_iterator first, reverse_iterator last)
+    {
+        for (reverse_iterator ite = last - 1 ; ite != first - 1 ; ite--)
+            this->insert(position, *ite);
+    }
+
+    void insert_dispatch(iterator position, const_iterator first, const_iterator last)
+    {
+        for (const_iterator ite = last - 1 ; ite != first - 1 ; ite--)
+            this->insert(position, *ite);
+    }
+
+    void insert_dispatch(iterator position, const_reverse_iterator first, const_reverse_iterator last)
+    {
+        for (const_reverse_iterator ite = last - 1 ; ite != first - 1 ; ite--)
             this->insert(position, *ite);
     }
 
