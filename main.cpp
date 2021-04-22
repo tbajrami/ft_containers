@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 08:34:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/22 17:49:35 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/22 23:15:30 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1675,6 +1675,11 @@ int main()
 
 	for (itf = fmap.begin() ; itf != fmap.end() ; itf++)
 		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+	
+	std::cout << "\n";
+
+	for (itf = fmap2.begin() ; itf != fmap2.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
 
 	std::cout << "\nstd:\n";
 
@@ -1788,9 +1793,12 @@ int main()
 	mymap['d']=80;
 	mymap['e']=100;
 
-	itlow=mymap.lower_bound ('b');  // itlow points to b
-	itup=mymap.upper_bound ('d');   // itup points to e (not d!)
-
+	itlow=mymap.lower_bound('b');  // itlow points to b
+	std::cout << "low: " << itlow->first;
+	std::cout << std::endl;
+	itup=mymap.upper_bound('d');   // itup points to e (not d!)
+	std::cout << "\nup: " << itup->first;
+	std::cout << std::endl;
 	mymap.erase(itlow,itup);        // erases [itlow,itup)
 
 	// print content:

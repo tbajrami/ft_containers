@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:04:49 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/22 17:36:18 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/22 23:14:59 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -508,22 +508,26 @@ private:
 			if (tmp == _root)
 				_root = tmp->left;
 			Node *tmp3 = tmp->left;
-			tmp3->right = tmp->right;
 			tmp3->parent = tmp->parent;
-			if (tmp3->right != _root)
+			if (tmp->left != _root && tmp->parent->left == tmp)
 				tmp3->parent->left = tmp3;
+			else if (tmp->left != _root && tmp->parent->right == tmp)
+				tmp3->parent->right = tmp3;
 			delete tmp;
+			tmp = NULL;
 		}
 		else if (tmp->right && !tmp->left)
 		{
 			if (tmp == _root)
 				_root = tmp->right;
 			Node *tmp3 = tmp->right;
-			tmp3->left = tmp->left;
 			tmp3->parent = tmp->parent;
-			if (tmp->right != _root)
+			if (tmp->right != _root && tmp->parent->left == tmp)
+				tmp3->parent->left = tmp3;
+			else if (tmp->right != _root && tmp->parent->right == tmp)
 				tmp3->parent->right = tmp3;
 			delete tmp;
+			tmp = NULL;
 		}
 	}
 
@@ -548,6 +552,7 @@ private:
 			tmp3->parent->right = tmp3;
 		tmp->left->parent = tmp3;
 		delete tmp;
+		tmp = NULL;
 	}
 };
 
