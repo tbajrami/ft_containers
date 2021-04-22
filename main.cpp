@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 08:34:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/21 16:25:44 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/22 17:49:35 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1585,11 +1585,12 @@ int main()
 	std::pair<char, int> p1('b', 0);
 	std::pair<char, int> p2('f', 4);
 	std::pair<char, int> p3('c', 1200);
+	std::pair<char, int> p4('e', 99);
 
-	fmap.insert(p0);
+	fmap.insert(p3);
 	fmap.insert(p1);
 	fmap.insert(p2);
-	fmap.insert(p3);
+	fmap.insert(p0);
 
 	smap.insert(p0);
 	smap.insert(p1);
@@ -1607,7 +1608,7 @@ int main()
 	std::cout << "\nstd:\n";
 
 	for (its = smap.begin() ; its != smap.end() ; its++)
-		std::cout << (*its).first << ": " << (*its).second << std::endl;
+		std::cout << its->first << ": " << its->second << std::endl;
 	
 	ft::Map<char, int> ffmap(fmap.begin(), fmap.end());
 
@@ -1635,4 +1636,164 @@ int main()
 
 	for (rits = smap.rbegin() ; rits != smap.rend() ; rits++)
 		std::cout << (*rits).first << ": " << (*rits).second << std::endl;
+	
+	std::cout << "\n\n######### --------- insert with hint --------- #########\n\nft:\n";
+	
+	itf = fmap.begin();
+	itf++;itf++;
+	fmap.insert(itf, p4);
+
+	its = smap.begin();
+	its++;its++;
+	smap.insert(its, p4);
+
+	for (itf = fmap.begin() ; itf != fmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+
+	std::cout << "\nstd:\n";
+
+	for (its = smap.begin() ; its != smap.end() ; its++)
+		std::cout << (*its).first << ": " << (*its).second << std::endl;
+
+	std::cout << "\n\n######### --------- insert with iterator --------- #########\n\nft:\n";
+
+	std::pair<char, int> pp0('g', 120);
+	std::pair<char, int> pp1('h', 40);
+	std::pair<char, int> pp2('d', 24);
+	std::pair<char, int> pp3('j', 12050);
+	std::pair<char, int> pp4('m', 95);
+	std::pair<char, int> pp5('k', 12050);
+	std::pair<char, int> pp6('l', 95);
+
+	ft::Map<char, int> fmap2;
+	fmap2.insert(pp0);fmap2.insert(pp1);fmap2.insert(pp2);fmap2.insert(pp3);fmap2.insert(pp4);fmap2.insert(pp5);fmap2.insert(pp6);
+	std::map<char, int> smap2;
+	smap2.insert(pp0);smap2.insert(pp1);smap2.insert(pp2);smap2.insert(pp3);smap2.insert(pp4);
+
+	fmap.insert(fmap2.begin(), fmap2.end());
+	smap.insert(smap2.begin(), smap2.end());
+
+	for (itf = fmap.begin() ; itf != fmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+
+	std::cout << "\nstd:\n";
+
+	for (its = smap.begin() ; its != smap.end() ; its++)
+		std::cout << (*its).first << ": " << (*its).second << std::endl;
+
+	std::cout << "\n\n######### --------- erase begin (a), key 'c' then iterator 3 to 6 (fgh) --------- #########\n\nft:\n";
+
+	itf = fmap.begin();
+	fmap.erase(itf);
+	itf = fmap.begin();
+	fmap.erase('c');
+	itf++;itf++;itf++;
+	ft::Map<char, int>::iterator itf2 = fmap.begin();
+	itf2++;itf2++;itf2++;itf2++;itf2++;itf2++;
+	fmap.erase(itf, itf2);
+
+	for (itf = fmap.begin() ; itf != fmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+
+	std::cout << "\n\n######### --------- swap --------- #########\n\nft:\n";
+
+	for (itf = fmap.begin() ; itf != fmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+	
+	std::cout << "\nft2:\n";
+
+	for (itf = ffmap.begin() ; itf != ffmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+
+	itf2 = fmap.begin();
+	std::cout << "\niterator set to ft begin : " << (*itf2).first << "\n\nAfter swap:\n\nft:\n";
+
+	fmap.swap(ffmap);
+
+	for (itf = fmap.begin() ; itf != fmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+	
+	std::cout << "\nft2:\n";
+
+	for (itf = ffmap.begin() ; itf != ffmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+	
+	std::cout << "\niterator set: " << (*itf2).first << " (still valid in the other container)\n\n";
+
+	std::cout << "\n\n######### --------- clear --------- #########\n\nsize: ";
+
+	ffmap.clear();
+
+	for (itf = ffmap.begin() ; itf != ffmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+
+	std::cout << ffmap.size() << std::endl;
+
+	std::cout << "\n\n######### --------- key & value comp --------- #########\n\nsize: ";
+
+	std::map<char, int>::key_compare scomp = smap.key_comp();
+	ft::Map<char, int>::key_compare fcomp = fmap.key_comp();
+	std::map<char, int>::value_compare scomp2 = smap.value_comp();
+	ft::Map<char, int>::value_compare fcomp2 = fmap.value_comp();
+
+	std::cout << "std keycomp a b: " << scomp('a', 'b') << std::endl;
+	std::cout << "ft keycomp a b: " << fcomp('a', 'b') << std::endl;
+	std::cout << "std keycomp b b: " << scomp('b', 'b') << std::endl;
+	std::cout << "ft keycomp b b: " << fcomp('b', 'b') << std::endl;
+	std::cout << "std keycomp b a: " << scomp('b', 'a') << std::endl;
+	std::cout << "ft keycomp b a: " << fcomp('b', 'a') << std::endl << std::endl;
+
+	std::cout << "std valuecomp a b: " << scomp2(p0, p1) << std::endl;
+	std::cout << "ft valuecomp a b: " << fcomp2(p0, p1) << std::endl;
+	std::cout << "std valuecomp b b: " << scomp2(p1, p1) << std::endl;
+	std::cout << "ft valuecomp b b: " << fcomp2(p1, p1) << std::endl;
+	std::cout << "std valuecomp b a: " << scomp2(p1, p0) << std::endl;
+	std::cout << "ft valuecomp b a: " << fcomp2(p1, p0) << std::endl;
+
+	std::cout << "\n\n######### --------- operator[] (size increased after 'z' insertion) --------- #########\n\nsize: ";
+
+	std::cout << fmap.size();
+	std::cout << "\nfmap['a']: " << fmap['a'] << std::endl;
+	std::cout << "fmap['b']: " << fmap['b'] << std::endl;
+	std::cout << "fmap['c']: " << fmap['c'] << std::endl;
+	std::cout << "fmap['z']: " << fmap['z'] << std::endl << "size: ";
+	std::cout << fmap.size();
+
+	std::cout << "\n\n######### --------- operator= empty map = fmap --------- #########\n\nsize: ";
+
+	ffmap = fmap;
+	for (itf = ffmap.begin() ; itf != ffmap.end() ; itf++)
+		std::cout << (*itf).first << ": " << (*itf).second << std::endl;
+
+	ffmap = fmap;
+
+	std::cout << "\n\n######### --------- find --------- #########\n\nfind c: ";
+
+	ft::Map<char, int>::iterator fitf = ffmap.find('c');
+	std::cout << (*fitf).first << ": " << (*fitf).second << std::endl;
+
+	std::cout << "\n\n######### --------- count --------- #########\n\ncount c: ";
+
+	std::cout << ffmap.count('c') << std::endl << "count w: " << ffmap.count('w') << std::endl;
+
+	std::cout << "\n\n######### --------- lower bound / higher bound (cplusplus.com example) --------- #########\n\n";
+
+	ft::Map<char,int> mymap;
+	ft::Map<char,int>::iterator itlow;
+	ft::Map<char,int>::iterator itup;
+
+	mymap['a']=20;
+	mymap['b']=40;
+	mymap['c']=60;
+	mymap['d']=80;
+	mymap['e']=100;
+
+	itlow=mymap.lower_bound ('b');  // itlow points to b
+	itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+
+	mymap.erase(itlow,itup);        // erases [itlow,itup)
+
+	// print content:
+	for (ft::Map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	std::cout << it->first << " => " << it->second << '\n';
 }

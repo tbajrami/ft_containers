@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 12:35:17 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/21 16:19:09 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/22 17:48:39 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class MIterator
         MIterator(const MIterator &ref) : _ptr(ref._ptr) {}
         void setPtr(Node *ptr) {this->_ptr = ptr;}
         void setId(Node *ptr) {this->_index = ptr;}
+        Node *getPtr() {return this->_ptr;}
 
     /* operators */
 
@@ -45,7 +46,7 @@ class MIterator
         bool operator!=(const MIterator &rhs) const {return (this->_ptr != rhs._ptr);}
         
         value_type &operator*() const {return this->_ptr->elem;}
-        value_type *operator->() {return this->_ptr->elem;}
+        value_type *operator->() {return &(this->_ptr->elem);}
 
         MIterator   operator++()
         {
@@ -166,6 +167,7 @@ class MConstIterator
         MConstIterator(const MConstIterator &ref) : _ptr(ref._ptr) {}
         void setPtr(Node *ptr) {this->_ptr = ptr;}
         void setId(Node *ptr) {this->_index = ptr;}
+        Node *getPtr() {return this->_ptr;}
 
     /* operators */
 
@@ -294,6 +296,7 @@ class MReverseIterator
         MReverseIterator(const MReverseIterator &ref) : _ptr(ref._ptr) {}
         void setPtr(Node *ptr) {this->_ptr = ptr;}
         void setId(Node *ptr) {this->_index = ptr;}
+        Node *getPtr() {return this->_ptr;}
 
     /* operators */
 
@@ -422,6 +425,7 @@ class MConstReverseIterator
         MConstReverseIterator(const MConstReverseIterator &ref) : _ptr(ref._ptr) {}
         void setPtr(Node *ptr) {this->_ptr = ptr;}
         void setId(Node *ptr) {this->_index = ptr;}
+        Node *getPtr() {return this->_ptr;}
 
     /* operators */
 
