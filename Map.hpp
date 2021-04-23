@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:04:49 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/22 23:14:59 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/23 15:58:25 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ public:
 	/* CAPACITY */
 
 	bool empty() const {return !_size;}
-	size_type size() {return _size;}
-	size_type max_size() {return (std::numeric_limits<size_type>::max() / sizeof(value_type));}
+	size_type size() const {return _size;}
+	size_type max_size() const {return (std::numeric_limits<size_type>::max() / sizeof(value_type));}
 
 	/* ITERATORS */
 
@@ -107,7 +107,7 @@ public:
 		iterator it;
 		Node *temp = _root;
 
-		if (!_size)
+		if (_size <= 1)
 			it.setPtr(_root);
 		else while (temp->left)
 			temp = temp->left;
@@ -120,7 +120,7 @@ public:
 		iterator it;
 		Node *temp = _root;
 
-		if (!_size)
+		if (_size <= 1)
 			it.setPtr(_root);
 		else while (temp->right)
 			temp = temp->right;
@@ -133,7 +133,8 @@ public:
 		const_iterator it;
 		Node *temp = _root;
 
-		if (!_size) it.setPtr(_root);
+		if (!_size)
+			it.setPtr(_root);
 		else while (temp->left)
 			temp = temp->left;
 		it.setPtr(temp);
@@ -204,14 +205,12 @@ public:
 
 	mapped_type &operator[](const key_type &k)
 	{
-		for (iterator it = begin() ; it != end() ; it++)
-		{
-			if ((*it).first == k)
-				return (*it).second;
-		}
-		const value_type pair(k, mapped_type());
-		insert(pair);
-		return ((*this)[k]);
+		value_type pair(k, mapped_type());
+		std::pair<iterator, bool> e = insert(pair);
+
+		if (e.second == true)
+			return e.first->second;
+		return (find(k)->second);
 	}
 
 	/* MODIFIERS */
@@ -316,19 +315,19 @@ public:
 		Node *tmp = position.getPtr();
 
 		if (!tmp || !_size) return;
-		if (_size == 1 && position == begin())
+		if (_size == 1)
 		{
 			delete tmp;
 			tmp = NULL;
 			_root = NULL;
+			_size--;
 		}
 		else if (!tmp->right && !tmp->left)
 			erase_leaf(tmp);
 		else if ((!tmp->right && tmp->left) || (tmp->right && !tmp->left))
 			erase_onechild(tmp);
 		else if (tmp->right && tmp->left)
-			erase_two(tmp, position);
-		_size -= 1;
+			erase_two(position);
 	}
 
 	size_type erase(const key_type &k)
@@ -347,13 +346,35 @@ public:
 	void erase(iterator first, iterator last)
 	{
 		iterator tmp;
+		Node *n;
+		key_compare c;
 
-		while (first != last)
+		if (last != end())
 		{
-			tmp = first;
-			tmp++;
+			key_type k = last->first;
+
+			while (c(first->first, k))
+			{
+				tmp = first;
+				n = first.getPtr();
+				if (!n->right || !n->left)
+					tmp++;
+				erase(first);
+				first = tmp;
+			}
+		}
+		else
+		{
+			while (first != end())
+			{
+				tmp = first;
+				n = first.getPtr();
+				if (!n->right || !n->left)
+					tmp++;
+				erase(first);
+				first = tmp;
+			}
 			erase(first);
-			first = tmp;
 		}
 	}
 
@@ -380,6 +401,8 @@ public:
 		value_compare k(c);
 		return k;
 	}
+
+	/* OPERATIONS */
 
 	iterator find(const key_type &k)
 	{
@@ -460,6 +483,22 @@ public:
 		return it;
 	}
 
+	std::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
+	{
+		std::pair<const_iterator, const_iterator> e;
+		e.first = lower_bound(k);
+		e.second = upper_bound(k);
+		return e;
+	}
+
+	std::pair<iterator, iterator> equal_range(const key_type &k)
+	{
+		std::pair<iterator, iterator> e;
+		e.first = lower_bound(k);
+		e.second = upper_bound(k);
+		return e;
+	}
+
 private:
 
 	Node *node_init(const value_type &val)
@@ -491,11 +530,13 @@ private:
 		tmp = tmp->parent;
 		if (tmp->right == tmp2)
 		{
+			_size--;
 			delete tmp->right;
 			tmp->right = NULL;
 		}
 		else
 		{
+			_size--;
 			delete tmp->left;
 			tmp->left = NULL;
 		}
@@ -514,6 +555,7 @@ private:
 			else if (tmp->left != _root && tmp->parent->right == tmp)
 				tmp3->parent->right = tmp3;
 			delete tmp;
+			_size--;
 			tmp = NULL;
 		}
 		else if (tmp->right && !tmp->left)
@@ -527,33 +569,94 @@ private:
 			else if (tmp->right != _root && tmp->parent->right == tmp)
 				tmp3->parent->right = tmp3;
 			delete tmp;
+			_size--;
 			tmp = NULL;
 		}
 	}
 
-	void erase_two(Node *tmp, iterator position)
+	void erase_two(iterator position)
 	{
 		iterator pos2 = position;
 		pos2++;
-		Node *tmp3 = pos2.getPtr();
-		Node *tmp4 = tmp3->parent;
 
-		if (tmp == _root)
-			_root = tmp3;
-		if (!tmp3->right && !tmp3->left)
-		{
-			tmp3->right = tmp->right;
-			tmp->right->parent = tmp3;
-			tmp4->left = NULL;
-		}
-		tmp3->left = tmp->left;
-		tmp3->parent = tmp->parent;
-		if (_root != tmp3)
-			tmp3->parent->right = tmp3;
-		tmp->left->parent = tmp3;
-		delete tmp;
-		tmp = NULL;
+		key_type *kptr;
+		mapped_type *mptr;
+		kptr = (key_type *)(&(position->first));
+		*kptr = pos2->first;
+		mptr = (mapped_type *)(&(position->second));
+		*mptr = pos2->second;
+		erase(pos2);
 	}
 };
+
+template <class Key, class T>
+void swap(ft::Map<Key, T> &x, ft::Map<Key, T> &y) {x.swap(y);}
+
+template <class Key, class T>
+bool operator==(const ft::Map<Key, T> &lhs, const ft::Map<Key, T> &rhs)
+{
+    ft::MConstIterator<std::pair<const Key, T> > l_it = lhs.begin();
+    ft::MConstIterator<std::pair<const Key, T> > r_it = rhs.begin();
+
+    if (lhs.size() != rhs.size())
+        return false;
+    else
+    {
+        for (size_t i = 0 ; i < lhs.size() ; i++)
+        {
+            if ((*l_it) != (*r_it))
+                return false;
+            l_it++;
+            r_it++;
+        }
+    }
+    return true;
+}
+
+template <class Key, class T>
+bool operator!=(const ft::Map<Key, T> &lhs, const  ft::Map<Key, T> &rhs) {return (!(lhs == rhs));}
+
+template <class Key, class T>
+bool operator<(const ft::Map<Key, T> &lhs, const ft::Map<Key, T> &rhs)
+{
+    ft::MConstIterator<std::pair<const Key, T> > l_it = lhs.begin();
+    ft::MConstIterator<std::pair<const Key, T> > r_it = rhs.begin();
+
+    size_t size = std::min(lhs.size(), rhs.size());
+    
+    for (size_t i = 0 ; i < size ; i++)
+    {
+		if (*l_it != *r_it)
+            return (*l_it < *r_it);
+		l_it++;
+		r_it++;
+    }
+    return (lhs.size() < rhs.size());
+}
+
+template <class Key, class T>
+bool operator>=(const ft::Map<Key, T> &lhs, const ft::Map<Key, T> &rhs) {return !(lhs < rhs);}
+
+template <class Key, class T>
+bool operator>(const ft::Map<Key, T> &lhs, const ft::Map<Key, T> &rhs)
+{
+    ft::MConstIterator<std::pair<const Key, T> > l_it = lhs.begin();
+    ft::MConstIterator<std::pair<const Key, T> > r_it = rhs.begin();
+
+    size_t size = std::min(lhs.size(), rhs.size());
+    
+    for (size_t i = 0 ; i < size ; i++)
+    {
+		if (*l_it != *r_it)
+            return (*l_it > *r_it);
+		l_it++;
+		r_it++;
+    }
+    return (lhs.size() > rhs.size());
+}
+
+template <class Key, class T>
+bool operator<=(const ft::Map<Key, T> &lhs, const ft::Map<Key, T> &rhs) {return !(lhs > rhs);}
+
 
 }

@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 08:34:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/23 10:38:47 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/23 15:49:19 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ bool compare_nocase (const std::string& first, const std::string& second)
 
 int main(int ac, char **av)
 {
-	(void)ac;
-	if (!av[1]) return 0;
-	if (std::string(av[1]) == "vector")
+	//(void)ac;
+	if ((ac == 1) || std::string(av[1]) == "vector")
 	{	
 		std::cout << "\n######### --------- VECTOR --------- #########\n\n";
 
@@ -681,7 +680,7 @@ int main(int ac, char **av)
 			std::cout << *itf << " ";
 	}
 
-	else if (std::string(av[1]) == "stack")
+	if ((ac == 1) || std::string(av[1]) == "stack")
 	{	
 		std::cout << "\n\n######### --------- STACK --------- #########\n\n";
 
@@ -715,13 +714,13 @@ int main(int ac, char **av)
 			ftst0.pop();
 		}
 
-		// stst0.push(50);
-		// stst0.push(295);
-		// stst0.push(0);
+		stst0.push(50);
+		stst0.push(295);
+		stst0.push(0);
 
-		// stst1.push(50);
-		// stst1.push(295);
-		// stst1.push(2);
+		stst1.push(50);
+		stst1.push(295);
+		stst1.push(2);
 
 		ftst0.push(50);
 		ftst0.push(295);
@@ -731,26 +730,26 @@ int main(int ac, char **av)
 		ftst1.push(295);
 		ftst1.push(2);
 
-		// std::cout << "\n### --- std --- ###\n\n";
+		std::cout << "\n### --- std --- ###\n\n";
 
-		// std::cout << "(50, 295, 0) < (50, 295, 2): " << (stst0 < stst1) << "\n";
-		// stst0.pop();
-		// stst0.push(0);
-		// stst0.push(0);
-		// std::cout << "(50, 295, 0, 0) < (50, 295, 0): " << (stst0 < stst1) << "\n";
-		// std::cout << "(50, 295, 0, 0) == (50, 295, 0): " << (stst0 == stst1) << "\n";
+		std::cout << "(50, 295, 0) < (50, 295, 2): " << (stst0 < stst1) << "\n";
+		stst0.pop();
+		stst0.push(0);
+		stst0.push(0);
+		std::cout << "(50, 295, 0, 0) < (50, 295, 0): " << (stst0 < stst1) << "\n";
+		std::cout << "(50, 295, 0, 0) == (50, 295, 0): " << (stst0 == stst1) << "\n";
 
-		// std::cout << "\n### --- ft --- ###\n\n";
+		std::cout << "\n### --- ft --- ###\n\n";
 
-		// std::cout << "(50, 295, 0) < (50, 295, 2): " << (ftst0 < ftst1) << "\n";
-		// ftst0.pop();
-		// ftst0.push(0);
-		// ftst0.push(0);
-		// std::cout << "(50, 295, 0, 0) < (50, 295, 0): " << (ftst0 < ftst1) << "\n";
-		// std::cout << "(50, 295, 0, 0) == (50, 295, 0): " << (ftst0 == ftst1) << "\n";
+		std::cout << "(50, 295, 0) < (50, 295, 2): " << (ftst0 < ftst1) << "\n";
+		ftst0.pop();
+		ftst0.push(0);
+		ftst0.push(0);
+		std::cout << "(50, 295, 0, 0) < (50, 295, 0): " << (ftst0 < ftst1) << "\n";
+		std::cout << "(50, 295, 0, 0) == (50, 295, 0): " << (ftst0 == ftst1) << "\n";
 	}
 
-	else if (std::string(av[1]) == "queue")
+	if ((ac == 1) || std::string(av[1]) == "queue")
 	{
 		std::cout << "\n######### --------- QUEUE --------- #########\n\n";
 
@@ -823,7 +822,7 @@ int main(int ac, char **av)
 		std::cout << "(50, 295, 0, 0) == (50, 295, 0): " << (ftqu0 == ftqu1) << "\n";
 	}
 	
-	else if (std::string(av[1]) == "list")
+	if ((ac == 1) || std::string(av[1]) == "list")
 	{
 		std::cout << "\n######### --------- LIST --------- #########\n\n";
 
@@ -1311,15 +1310,21 @@ int main(int ac, char **av)
 
 		std::cout << "\n\n######### --------- splice lst[2] pos 2 --------- #########\n\n";
 
+		std::cout << "lst2:\n";
+
 		lst2.push_back(77);lst2.push_back(88);lst2.push_back(99);
+		for (lit = lst2.begin() ; lit != lst2.end() ; lit++)
+		{
+			std::cout << *lit << " ";
+		}
+
 		ft::List<int>::iterator litt = lst2.begin();
 		litt++;
 		ft::List<int>::iterator ifli2 = iflst.begin();
-		//ifli2++;
-		ifli2 = iflst.end();
+		ifli2++;
 		iflst.splice(ifli2, lst2, litt);
 
-		std::cout << "lst: ";
+		std::cout << "\nlst: ";
 		for (lit = iflst.begin() ; lit != iflst.end() ; lit++)
 		{
 			std::cout << *lit << " ";
@@ -1361,8 +1366,6 @@ int main(int ac, char **av)
 		{
 			std::cout << *lit << " ";
 		}
-
-		std::cout << "\nsize " << iflst.size() << " " << lst2.size();
 
 		std::cout << "\n\n######### --------- splice in empty list --------- #########\n\n";
 
@@ -1591,7 +1594,7 @@ int main(int ac, char **av)
 		if (A>=B) std::cout << "a is greater than or equal to b\n";
 	}
 
-	else if (std::string(av[1]) == "map")
+	if ((ac == 1) || std::string(av[1]) == "map")
 	{
 		std::cout << "\n######### --------- MAP --------- #########\n\n";
 
@@ -1742,14 +1745,17 @@ int main(int ac, char **av)
 		
 		std::cout << "\niterator set: " << (*mitf2).first << " (still valid in the other container)\n\n";
 
-		std::cout << "\n\n######### --------- clear --------- #########\n\nsize: ";
+		std::cout << "\n\n######### --------- clear --------- #########\n\n";
 
-		ffmap.clear();
-
-		for (mitf = ffmap.begin() ; mitf != ffmap.end() ; mitf++)
+		for (mitf = fmap2.begin() ; mitf != fmap2.end() ; mitf++)
 			std::cout << (*mitf).first << ": " << (*mitf).second << std::endl;
 
-		std::cout << ffmap.size() << std::endl;
+		fmap2.clear();
+
+		for (mitf = fmap2.begin() ; mitf != fmap2.end() ; mitf++)
+			std::cout << (*mitf).first << ": " << (*mitf).second << std::endl;
+
+		std::cout << fmap2.size() << std::endl;
 
 		std::cout << "\n\n######### --------- key & value comp --------- #########\n\n";
 
@@ -1789,7 +1795,7 @@ int main(int ac, char **av)
 
 		ffmap = fmap;
 
-		std::cout << "\n\n######### --------- find --------- #########\n\nfind c: ";
+		std::cout << "\n\n######### --------- find --------- #########\n\nfind: ";
 
 		ft::Map<char, int>::iterator fmitf = ffmap.find('c');
 		std::cout << (*fmitf).first << ": " << (*fmitf).second << std::endl;
@@ -1810,6 +1816,9 @@ int main(int ac, char **av)
 		mymap['d']=80;
 		mymap['e']=100;
 
+		for (ft::Map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
 		itlow=mymap.lower_bound('b');
 		std::cout << "low: " << itlow->first;
 		std::cout << std::endl;
@@ -1821,21 +1830,38 @@ int main(int ac, char **av)
 		for (ft::Map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
-		// std::pair<char, int> pp0('g', 120);
-		// std::pair<char, int> pp1('h', 40);
-		// std::pair<char, int> pp2('d', 24);
-		// std::pair<char, int> pp3('j', 12050);
-		// std::pair<char, int> pp4('m', 95);
-		// std::pair<char, int> pp5('k', 12050);
-		// std::pair<char, int> pp6('l', 95);
+		std::cout << "\n\n######### --------- equal range (cplusplus.com example) --------- #########\n\n";
 
-		ffmap.insert(pp3);
-		ffmap.insert(pp0);
-		ffmap.insert(pp6);
-		ffmap.insert(pp5);
-		ffmap.insert(pp4);
+		ft::Map<char,int> mymap2;
 
+		mymap2['a']=10;
+		mymap2['b']=20;
+		mymap2['c']=30;
 
-		ffmap.clear();
+		std::pair<ft::Map<char,int>::iterator,ft::Map<char,int>::iterator> ret;
+		ret = mymap2.equal_range('b');
+
+		std::cout << "lower bound points to: ";
+		std::cout << ret.first->first << " => " << ret.first->second << '\n';
+
+		std::cout << "upper bound points to: ";
+		std::cout << ret.second->first << " => " << ret.second->second << '\n';
+
+		std::cout << "\n\n######### --------- operators --------- #########\n\n";
+
+		ft::Map<char,int> foo;
+		ft::Map<char,int> bar;
+		foo['a']=100;
+		foo['b']=200;
+		bar['a']=10;
+		bar['z']=1000;
+
+		// foo ({{a,100},{b,200}}) vs bar ({a,10},{z,1000}}):
+		if (foo==bar) std::cout << "foo and bar are equal\n";
+		if (foo!=bar) std::cout << "foo and bar are not equal\n";
+		if (foo< bar) std::cout << "foo is less than bar\n";
+		if (foo> bar) std::cout << "foo is greater than bar\n";
+		if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+		if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 12:22:38 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/15 11:55:57 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/23 15:20:04 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -729,7 +729,6 @@ private:
 
 template <class T>
 void swap(ft::List<T> &x, ft::List<T> &y) {x.swap(y);}
-
 
 template <class T>
 bool operator==(const ft::List<T> &lhs, const ft::List<T> &rhs)
