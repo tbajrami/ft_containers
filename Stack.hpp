@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:47:32 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/10 11:58:46 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/23 10:43:40 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ protected:
     container_type c;
 
 public:
-    explicit Stack(const container_type &ctnr = container_type()) {c = ctnr;}
+    explicit Stack() {}
     ~Stack() {}
 
     bool empty() const {return c.empty();}

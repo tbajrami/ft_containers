@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:47:28 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/14 16:03:34 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/23 10:45:42 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ public:
     {
         if (this->empty())
         {
+            delete [] this->_begin;
             this->_begin = new value_type;
             this->_end = this->_begin;
             this->_capacity = 1;
@@ -344,24 +345,6 @@ private:
 
     template <class T1>
     void input_dispatch(T1 *first, T1 *last)
-    {
-        size_t size = last - first;
-        size_t i = 0;
-
-        _size = size;
-        _capacity = size;
-        _begin = new value_type[size];
-        while (first != last)
-        {
-            _begin[i] = *first;
-            first++;
-            i++;
-        }
-        _end = _begin + size;
-    }
-
-    template <class InputIterator>
-    void input_dispatch(InputIterator first, InputIterator last)
     {
         size_t size = last - first;
         size_t i = 0;

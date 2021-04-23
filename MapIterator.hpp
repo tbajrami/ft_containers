@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 12:35:17 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/22 17:48:39 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/23 09:57:11 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ class MConstIterator
         bool operator!=(const MConstIterator &rhs) const {return (this->_ptr != rhs._ptr);}
         
         const value_type &operator*() const {return this->_ptr->elem;}
-        const value_type *operator->() const {return this->_ptr->elem;}
+        const value_type *operator->() const {return &(this->_ptr->elem);}
 
         MConstIterator   operator++()
         {
@@ -304,7 +304,7 @@ class MReverseIterator
         bool operator!=(const MReverseIterator &rhs) const {return (this->_ptr != rhs._ptr);}
         
         value_type &operator*() const {return this->_ptr->elem;}
-        value_type *operator->() {return this->_ptr->elem;}
+        value_type *operator->() {return &(this->_ptr->elem);}
 
         MReverseIterator   operator--()
         {
@@ -433,7 +433,7 @@ class MConstReverseIterator
         bool operator!=(const MConstReverseIterator &rhs) const {return (this->_ptr != rhs._ptr);}
         
         value_type &operator*() const {return this->_ptr->elem;}
-        value_type *operator->() {return this->_ptr->elem;}
+        const value_type *operator->() const {return &(this->_ptr->elem);}
 
         MConstReverseIterator   operator--()
         {

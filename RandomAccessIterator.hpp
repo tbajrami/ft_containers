@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 07:44:47 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/10 11:14:00 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/23 09:59:49 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class Iterator
         bool operator>(const Iterator &rhs) const {return (this->_ptr > rhs._ptr);}
         
         value_type &operator*() const {return *(this->_ptr);}
-        value_type *operator->() {return this->_ptr;}
+        value_type *operator->() {return &(this->_ptr->elem);}
         value_type &operator[](int n) const {return *(this->_ptr + n);}
         
         Iterator   operator++() {this->_ptr += 1; return (*this);}
@@ -115,7 +115,7 @@ class ReverseIterator
         bool operator>(const ReverseIterator &rhs) const {return (this->_ptr > rhs._ptr);}
         
         value_type &operator*() const {return *(this->_ptr);}
-        value_type *operator->() {return this->_ptr;}
+        value_type *operator->() {return &(this->_ptr);}
         value_type &operator[](int n) const {return *(this->_ptr - n);}
         
         ReverseIterator   operator++() {this->_ptr -= 1; return (*this);}
@@ -185,7 +185,7 @@ class ConstIterator
         bool operator>(const ConstIterator &rhs) const {return (this->_ptr > rhs._ptr);}
         
         const value_type &operator*() const {return *(this->_ptr);}
-        const value_type *operator->() {return this->_ptr;}
+        const value_type *operator->() const {return &(this->_ptr);}
         const value_type &operator[](int n) const {return *(this->_ptr + n);}
         
         ConstIterator   operator++() {this->_ptr += 1; return (*this);}
@@ -254,7 +254,7 @@ class ReverseConstIterator
         bool operator>(const ReverseConstIterator &rhs) const {return (this->_ptr > rhs._ptr);}
         
         const value_type &operator*() const {return *(this->_ptr);}
-        const value_type *operator->() {return this->_ptr;}
+        const value_type *operator->() const {return &(this->_ptr);}
         const value_type &operator[](int n) const {return *(this->_ptr - n);}
         
         ReverseConstIterator   operator++() {this->_ptr -= 1; return (*this);}

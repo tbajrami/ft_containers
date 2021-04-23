@@ -6,7 +6,7 @@
 /*   By: tbajrami <tbajrami@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:57:05 by tbajrami          #+#    #+#             */
-/*   Updated: 2021/04/10 16:12:56 by tbajrami         ###   ########lyon.fr   */
+/*   Updated: 2021/04/23 09:58:07 by tbajrami         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class BIterator
         bool operator!=(const BIterator &rhs) const {return (this->_ptr != rhs._ptr);}
         
         value_type &operator*() const {return this->_ptr->elem;}
-        value_type *operator->() {return this->_ptr->elem;}
+        value_type *operator->() {return &(this->_ptr->elem);}
 
         BIterator   operator++() {this->_ptr = this->_ptr->next; return (*this);}
         BIterator   operator++(int i)
@@ -91,7 +91,7 @@ class BReverseIterator
         bool operator!=(const BReverseIterator &rhs) const {return (this->_ptr != rhs._ptr);}
         
         value_type &operator*() const {return this->_ptr->elem;}
-        value_type *operator->() {return this->_ptr->elem;}
+        value_type *operator->() {return &(this->_ptr->elem);}
 
         BReverseIterator   operator++() {this->_ptr = this->_ptr->prev; return (*this);}
         BReverseIterator   operator++(int i)
@@ -140,7 +140,7 @@ class BConstIterator
         bool operator!=(const BConstIterator &rhs) const {return (this->_ptr != rhs._ptr);}
         
         const value_type &operator*() const {return this->_ptr->elem;}
-        const value_type *operator->() const {return this->_ptr->elem;}
+        const value_type *operator->() const {return &(this->_ptr->elem);}
 
         BConstIterator   operator++() {this->_ptr = this->_ptr->next; return (*this);}
         BConstIterator   operator++(int i)
@@ -189,7 +189,7 @@ class BReverseConstIterator
         bool operator!=(const BReverseConstIterator &rhs) const {return (this->_ptr != rhs._ptr);}
         
         const value_type &operator*() const {return this->_ptr->elem;}
-        const value_type *operator->() const {return this->_ptr->elem;}
+        const value_type *operator->() const {return &(this->_ptr->elem);}
 
         BReverseConstIterator   operator++() {this->_ptr = this->_ptr->prev; return (*this);}
         BReverseConstIterator   operator++(int i)
